@@ -67,14 +67,14 @@ func LogMW(next http.Handler) http.Handler {
     })
 }
 
-func helloHandler(w http.ResponseWriter, r *http.Request) {
-    w.Write([]byte("Hello, World!"))
+func rootHandler(w http.ResponseWriter, r *http.Request) {
+    w.WriteHeader(http.StatusNoContent)
 }
 
 r := router.NewRouter()
 
 r.Use(LogMW)
-r.HandleFunc("/hello", helloHandler)
+r.HandleFunc("/", rootHandler)
 
 http.ListenAndServe(":8080", r)
 ```
