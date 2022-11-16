@@ -340,22 +340,32 @@ func TestRadix_Remove(t *testing.T) {
 func BenchmarkInsert(b *testing.B) {
 	r := new(Radix)
 
+	var keys []string
+	for n := 0; n < b.N; n++ {
+		key := strconv.Itoa(n)
+		keys = append(keys, key)
+	}
+
 	b.ResetTimer()
 
 	for n := 0; n < b.N; n++ {
-		_, _ = r.Insert(strconv.Itoa(n), true)
+		_, _ = r.Insert(keys[n], true)
 	}
 }
 
 func BenchmarkInsertRemove(b *testing.B) {
 	r := new(Radix)
+
+	var keys []string
 	for n := 0; n < b.N; n++ {
-		_, _ = r.Insert(strconv.Itoa(n), true)
+		key := strconv.Itoa(n)
+		keys = append(keys, key)
+		_, _ = r.Insert(key, true)
 	}
 
 	b.ResetTimer()
 
 	for n := 0; n < b.N; n++ {
-		_, _ = r.Remove(strconv.Itoa(n))
+		_, _ = r.Remove(keys[n])
 	}
 }
