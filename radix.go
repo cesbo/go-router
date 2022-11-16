@@ -3,7 +3,6 @@ package router
 import (
 	"fmt"
 	"io"
-	"strings"
 )
 
 // strcmp compares two strings and returns number of equal characters.
@@ -161,7 +160,7 @@ func (n *Radix) LookupPath(path string) any {
 			return lastRoot.value
 		}
 
-		if strings.HasSuffix(e.prefix, "/") && e.node.value != nil {
+		if e.node.value != nil && (e.prefix[l-1] == '/') {
 			lastRoot = e.node
 		}
 
